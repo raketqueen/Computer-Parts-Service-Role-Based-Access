@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PC Hardware Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+    	body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa; /* light gray background for contrast */
+    	}
+
+    	h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 3rem; /* bigger and more prominent */
+            color: #0d6efd; /* Bootstrap primary blue */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* subtle shadow for depth */
+            letter-spacing: 1px;
+	    text-align: center;
+    	}
+
+    	table th {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+    	}
+
+	/* Dark Mode */
+	.dark-mode {
+    	    background-color: #121212;
+    	    color: #e4e4e4;
+	}
+
+	.dark-mode body {
+    	    background-color: #121212;
+	}
+
+	.dark-mode .container-fluid {
+    	    background-color: #121212;
+	}
+
+	.dark-mode table {
+    	    background-color: #1a1a1a;
+    	    color: #e4e4e4;
+	}
+
+	.dark-mode .table-dark {
+    	    background-color: #1f1f1f;
+	}
+
+	.dark-mode .table-striped > tbody > tr:nth-of-type(odd) {
+    	    background-color: #1e1e1e;
+	}
+
+	.dark-mode .btn-outline-secondary {
+    	    border-color: #888;
+    	    color: #ddd;
+	}
+
+	/* Dark search box */
+	.dark-mode .form-control {
+    	    background-color: #1a1a1a;
+    	    color: #ffffff;
+    	    border: 1px solid #ffffff;
+	}
+
+	.dark-mode .form-control:focus,
+	.dark-mode .form-control:hover {
+    	    background-color: #1a1a1a !important;
+    	    color: #ffffff !important;
+    	    border: 1px solid #ffffff !important;
+    	    box-shadow: none !important;
+	}
+
+	.dark-mode .form-control::placeholder {
+    	    color: #bbbbbb;
+	}
+
+	/* Fix browser autofill white background */
+	.dark-mode input:-webkit-autofill,
+	.dark-mode input:-webkit-autofill:hover,
+	.dark-mode input:-webkit-autofill:focus,
+	.dark-mode textarea:-webkit-autofill,
+	.dark-mode select:-webkit-autofill {
+    	    -webkit-text-fill-color: #ffffff;
+    	    -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset;
+    	    transition: background-color 5000s ease-in-out 0s;
+	}
+
+	/* Dark input group button */
+	.dark-mode .input-group .btn {
+    	    border-color: #ffffff;
+	}
+
+	/* Dark table headers and cells */
+	.dark-mode th,
+	.dark-mode td {
+    	    color: #e4e4e4 !important; /* ensures all table text is readable */
+    	    background-color: #1a1a1a;
+	    border-color: #ffffff
+	}
+
+	/* Table header styling in dark mode */
+	.dark-mode thead th {
+    	    color: #ff2bd6 !important;
+    	    font-weight: bold;
+	}
+
+	.dark-mode table {
+    	    border-color: #ffffff !important;
+	}
+
+	.dark-mode table tr {
+    	    border-color: #ffffff !important;
+	}
+
+	/* Category column styling */
+	.dark-mode td:first-child {
+    	    color: #ffffff !important; /* neon white */
+    	    font-weight: bold;
+	}
+
+	/* Model / Specs column styling */
+	.dark-mode td:nth-child(2) {
+    	    color: #39ff14 !important; /* neon green, or #ff2bd6 for neon pink */
+    	    font-weight: normal;
+	}
+
+	/* Info paragraph above table */
+	.dark-mode p.text-muted {
+    	    color: #cccccc !important;
+	}
+
+	/* Full page dark background */
+	.dark-mode,
+	.dark-mode html,
+	.dark-mode body {
+    	    background-color: #121212 !important;
+    	    color: #e4e4e4 !important;
+    	    min-height: 100vh;
+	}
+
+	/* Dark category buttons */
+	.dark-mode .btn-outline-secondary {
+    	    border-color: #888;
+    	    color: #ddd;
+    	    background-color: #1a1a1a;
+	}
+
+	.dark-mode .btn-outline-secondary:hover {
+    	    background-color: #2a2a2a;
+    	    color: #ffffff;
+	}
+
+	/* Dark “Show All” button */
+	.dark-mode .btn-dark {
+    	    background-color: #333 !important;
+    	    color: #fff !important;
+	}
+    </style>
+</head>
+<body class="bg-light">
+<div class="container-fluid mt-4">
+
+	<div class="d-flex justify-content-center align-items-center mb-3 position-relative">
+    	    <h1 class="mb-0">PC Hardware Inventory</h1>
+	    	<div class="position-absolute end-0">
+    		    <button class="btn btn-outline-secondary me-2" onclick="toggleTheme()">🌙 / ☀️</button>
+    		    <a href="/add" class="btn btn-primary">Add New Part</a>
+		</div>
+	</div>
+
+	<div class="mb-3 text-center">
+    	    <div class="btn-group flex-wrap" role="group">
+        	{% for cat in categories %}
+            	    <button class="btn btn-outline-secondary" onclick="filter('{{ cat }}')">{{ cat }}</button>
+        	{% endfor %}
+        	<button class="btn btn-dark" onclick="filter('')">Show All</button>
+    	    </div>
+	</div>
+
+    <br>
+
+	<form method="GET" class="mb-3">
+  	    <input type="hidden" name="category" value="{{ request.args.get('category', '') }}">
+
+    	    <div class="input-group">
+        	<input type="text"
+               	       name="search"
+               	       class="form-control"
+               	       placeholder="Search model or specs"
+               	       value="{{ request.args.get('search', '') }}">
+
+        	<button class="btn btn-primary" type="submit">Search</button>
+		{% if request.args.get('search') %}
+		<a href="/" class="btn btn-secondary">Clear</a>
+		{% endif %}
+    	    </div>
+	</form>
+
+	<p class="text-muted small mb-2">Showing {{ parts|length }} parts</p>
+
+	{% if request.args.get('category') %}
+	<p class="small mb-3">
+	Active Filter:
+	<span class="badge bg-secondary">{{ request.args.get('category') }}</span>
+	</p>
+	{% endif %}	
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+	<tr>
+    	    <th>Category</th>
+    	    <th>Model / Specs</th>
+    	    <th class="text-center">Actions</th>
+	</tr>
+	</thead>
+	<tbody>
+	
+	    {% for part in parts %}
+            <tr>
+                <td>{{ part[1] }}</td> <!-- Category -->
+    		<td>{{ part[2] }} {{ part[3] }}</td>	<!-- Model / Specs -->
+    		<td class="text-center d-flex justify-content-center">
+        	    <a href="/edit/{{ part[0] }}" class="btn btn-sm btn-warning me-2">Edit</a>
+		    <form action="/delete/{{ part[0] }}" method="POST" style="display:inline;">
+			<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Warning: This action will permanently remove the selected part!')">Delete</button>
+		    </form>
+    		</td>
+            </tr>
+        {% endfor %}
+    	
+	</tbody>
+    </table>
+
+    <script>
+        function filter(category){
+            if(category){
+                window.location.href='/?category='+category;
+            } else {
+                window.location.href='/';
+            }
+        }
+	
+	function toggleTheme(){
+    	    document.body.classList.toggle("dark-mode");
+
+    	    if(document.body.classList.contains("dark-mode")){
+        	localStorage.setItem("theme","dark");
+    	    } else {
+        	localStorage.setItem("theme","light");
+    	    }
+	}
+	
+	document.addEventListener("DOMContentLoaded", function(){
+    	    if(localStorage.getItem("theme") === "dark"){
+        	document.body.classList.add("dark-mode");
+    	    }
+	});
+    </script>
+</div>
+</body>
+</html>

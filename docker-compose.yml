@@ -1,0 +1,36 @@
+#version: "3"
+
+services:
+  web:
+    build: ./app
+    container_name: parts_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    container_name: parts_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+#      MYSQL_DATABASE: partsdb
+    ports:
+      - "3307:3306"     # host:container
+    volumes:
+#      - db_data:/var/lib/mysql
+      - /docker/mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  nginx:
+    build: ./nginx
+    container_name: parts_nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - web
+
+volumes:
+  db_data:
