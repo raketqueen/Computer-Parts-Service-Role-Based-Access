@@ -101,16 +101,16 @@
         <h2>Edit Part</h2>
         <form method="POST">
             <div class="mb-3">
-                <label>Category</label>
-    		<input list="category_list" name="category" class="form-control" 
-           	       value="{{ part[1] }}" placeholder="Select or type new category" required>
-    		<datalist id="category_list">
+    		<label>Category</label>
+    		<select name="category" class="form-control" required>
         	    {% for cat in categories %}
-            		<option value="{{ cat }}">
+            		<option value="{{ cat }}" {% if cat == part[1] %}selected{% endif %}>
+                	    {{ cat }}
+            		</option>
         	    {% endfor %}
-    		</datalist>
-            </div>
-            <div class="mb-3">
+    		</select>
+	    </div>
+	    <div class="mb-3">
                 <label>Model</label>
                 <input type="text" name="model" class="form-control" placeholder="Enter model" value="{{ part[2] }}" required>
             </div>
