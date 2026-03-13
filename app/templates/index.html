@@ -158,16 +158,70 @@
     	    background-color: #333 !important;
     	    color: #fff !important;
 	}
+
+	/* Dark mode for login modal */
+	.dark-mode .modal-content {
+    	    background-color: #1a1a1a;
+    	    color: #e4e4e4;
+	}
+
+	.dark-mode .modal-header,
+	.dark-mode .modal-body {
+    	    background-color: #1a1a1a;
+    	    color: #e4e4e4;
+	}
+
+	.dark-mode .modal .form-control {
+    	    background-color: #2a2a2a;
+    	    color: #ffffff;
+    	    border: 1px solid #ffffff;
+	}
+
+	.dark-mode .modal .form-control:focus {
+    	    background-color: #2a2a2a;
+    	    color: #ffffff;
+    	    border: 1px solid #ffffff;
+    	    box-shadow: none;
+	}
+
+	.dark-mode .modal .btn-primary {
+    	    background-color: #0d6efd;
+    	    border-color: #0d6efd;
+    	    color: #ffffff;
+	}
+
+	.dark-mode .modal .btn-primary:hover {
+    	    background-color: #0b5ed7;
+    	    border-color: #0b5ed7;
+    	    color: #ffffff;
+	}
     </style>
 </head>
 <body class="bg-light">
 <div class="container-fluid mt-4">
 
-	<div class="d-flex justify-content-center align-items-center mb-3 position-relative">
-    	    <h1 class="mb-0">PC Hardware Inventory</h1>
+	    <div class="d-flex justify-content-center align-items-center mb-3 position-relative">
+
+	    	<div class="position-absolute start-0">
+            	    {% if session.get('user_id') %}
+            	    	<span class="me-2">Welcome {{ session.get('username') }}</span>
+			<form method="POST" action="/logout" style="display:inline;">
+    			    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+			</form>
+            	    {% else %}
+            	    	<button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+			Login
+			</button>
+		    {% endif %}
+    	    	</div>
+
+    	    	<h1 class="mb-0">PC Hardware Inventory</h1>
+
 	    	<div class="position-absolute end-0">
     		    <button class="btn btn-outline-secondary me-2" onclick="toggleTheme()">🌙 / ☀️</button>
+		    {% if session.get('role') == 'admin' %}
     		    <a href="/add" class="btn btn-primary">Add New Part</a>
+		    {% endif %}
 		</div>
 	</div>
 
@@ -213,7 +267,9 @@
 	<tr>
     	    <th>Category</th>
     	    <th>Model / Specs</th>
+    	    {% if session.get('role') in ['admin', 'editor'] %}
     	    <th class="text-center">Actions</th>
+    	    {% endif %}
 	</tr>
 	</thead>
 	<tbody>
@@ -222,12 +278,18 @@
             <tr>
                 <td>{{ part[1] }}</td> <!-- Category -->
     		<td>{{ part[2] }} {{ part[3] }}</td>	<!-- Model / Specs -->
-    		<td class="text-center d-flex justify-content-center">
-        	    <a href="/edit/{{ part[0] }}" class="btn btn-sm btn-warning me-2">Edit</a>
-		    <form action="/delete/{{ part[0] }}" method="POST" style="display:inline;">
-			<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Warning: This action will permanently remove the selected part!')">Delete</button>
-		    </form>
+    		{% if session.get('role') in ['admin', 'editor'] %}
+		<td class="text-center d-flex justify-content-center">
+		    {% if session.get('role') in ['admin', 'editor'] %}
+        	    	<a href="/edit/{{ part[0] }}" class="btn btn-sm btn-warning me-2">Edit</a>
+		    {% endif %}
+		    {% if session.get('role') == 'admin' %}
+		    	<form action="/delete/{{ part[0] }}" method="POST" style="display:inline;">
+			    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Warning: This action will permanently remove the selected part!')">Delete</button>
+		    	</form>
+		    {% endif %}
     		</td>
+		{% endif %}
             </tr>
         {% endfor %}
     	
@@ -260,5 +322,34 @@
 	});
     </script>
 </div>
+
+<!-- Step 2: Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/login">
+          <div class="mb-3">
+            <label for="modalUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="modalUsername" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="modalPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="modalPassword" name="password" required>
+          </div>
+          <div id="loginError" class="text-danger mb-2" style="display:none;"></div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

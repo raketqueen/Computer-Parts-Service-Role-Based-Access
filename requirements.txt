@@ -25,6 +25,7 @@ libdnf==0.73.1
 louis==3.28.0
 lxml==5.2.1
 MarkupSafe==3.0.3
+mysql-connector-python==9.6.0
 nftables==0.1
 packaging==24.2
 perf==0.1

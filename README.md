@@ -7,6 +7,8 @@ A simple inventory management system for PC parts built with Flask and MySQL.
 - Search and filter by category
 - Light/Dark mode
 - Responsive UI with Bootstrap
+- Added the Role Based Access for users
+- Clean the view in main page
 
 ## Setup
 1. Install Python 3.x and MySQL

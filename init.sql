@@ -15,3 +15,13 @@ INSERT INTO parts (category, model, specs) VALUES
 ('RAM','Corsair Vengeance','32GB DDR4 3600MHz'),
 ('Motherboard','ASUS ROG STRIX','ATX, Z790'),
 ('PSU','Corsair RM850','850W, 80+ Gold');
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'editor', 'viewer') NOT NULL
+);
+
+INSERT INTO users (username, password, role) VALUES
+('admin', 'admin123', 'admin');

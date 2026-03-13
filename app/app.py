@@ -1,3 +1,4 @@
+from flask import session, flash
 import time
 import mysql.connector
 from flask import Flask, render_template, request, redirect
@@ -23,6 +24,57 @@ if db is None:
     raise Exception("Could not connect to MySQL after 10 attempts")
 
 cursor = db.cursor()
+
+app.secret_key = "your_secret_key_here"  # Add this for session management
+
+# Helper function to require login
+
+
+def login_required(f):
+    from functools import wraps
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user_id" not in session:
+            flash("Please log in to access this page")
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Login page
+
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    cursor.execute(
+        "SELECT id, username, role FROM users WHERE username=%s AND password=%s",
+        (username, password)
+    )
+
+    user = cursor.fetchone()
+
+    if user:
+        session["user_id"] = user[0]
+        session["username"] = user[1]
+        session["role"] = user[2]
+        flash("Login successful")
+    else:
+        flash("Invalid username or password")
+
+    return redirect("/")
+
+
+# Logout page
+@app.route("/logout", methods=["POST"])
+@login_required
+def logout():
+    session.clear()
+    flash("You have been logged out successfully")
+    return redirect("/")
+
 
 # Home page
 
@@ -57,8 +109,12 @@ def home():
 # Add New Part page
 
 
+@login_required
 @app.route("/add", methods=["GET", "POST"])
 def add_part():
+    if session.get("role") != "admin":
+        flash("You do not have permission to access this page")
+        return redirect("/")
 
     cursor.execute("SELECT DISTINCT category FROM parts")
     categories = [row[0] for row in cursor.fetchall()]
@@ -78,8 +134,13 @@ def add_part():
 # Edit Part page
 
 
+@login_required
 @app.route("/edit/<int:part_id>", methods=["GET", "POST"])
 def edit_part(part_id):
+    if session.get("role") not in ["admin", "editor"]:
+        flash("You do not have permission to edit this part")
+        return redirect("/")
+
     if request.method == "POST":
         category = request.form["category"].strip().upper()
         model = request.form["model"]
@@ -102,8 +163,13 @@ def edit_part(part_id):
 # Delete Part page
 
 
+@login_required
 @app.route("/delete/<int:part_id>", methods=["POST"])
 def delete_part(part_id):
+    if session.get("role") != "admin":
+        flash("You do not have permission to delete this part")
+        return redirect("/")
+
     cursor.execute("DELETE FROM parts WHERE id=%s", (part_id,))
     db.commit()
     return redirect("/")
