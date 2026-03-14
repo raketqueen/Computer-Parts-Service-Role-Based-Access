@@ -23,5 +23,8 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('admin', 'editor', 'viewer') NOT NULL
 );
 
-INSERT INTO users (username, password, role) VALUES
-('admin', 'admin123', 'admin');
+INSERT INTO users (username, password, role) VALUES (
+    'admin',
+    'scrypt:32768:8:1$RPwf3n4vd0kOFUR4$42fa4d1abe85b25994b9362fc282f5ff079e68f56b3815c2414411307600cefbc3efe033b61e286f2b5793f1472c7b0c3b869ad8b4972354ffabc3042183bbaa',
+    'admin'
+);
