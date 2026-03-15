@@ -94,16 +94,17 @@ computer-parts-service/
 ``` Bash
     docker compose up --build
 ```
-## 
+
+3. Post Docker Compose build:   
 	- Web app will be accessible at http://localhost:8080
 	- MySQL is available internally on port 3306, mapped to host 3307
 
-3.	Initial Admin Account
+4.	Initial Admin Account
     - Username: admin
     - Password: admin123 (hashed in init.sql)
     - Only the admin can create users and manage roles
 
-4. Stop Containers:
+5. Stop Containers:
 ``` Bash
     docker compose down
 ```
