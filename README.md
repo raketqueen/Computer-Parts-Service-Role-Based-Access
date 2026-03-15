@@ -55,7 +55,6 @@ computer-parts-service/
 - Docker Compose
 - Web browser (Chrome, Firefox, etc.)
 
-
 ## Security Notes
 1.	Passwords are hashed in the database
 2.	Changing the admin password does not require updating init.sql
@@ -66,6 +65,7 @@ computer-parts-service/
     - Access via User Management button
     - Add, edit, delete users
     - Reset user passwords
+    - Safety features implemented for user deletion
 2.	Parts Management
     - Add, edit, delete parts (based on role)
     - Filter and search parts by category or keyword

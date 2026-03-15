@@ -207,6 +207,14 @@ def add_user():
     password = request.form["password"]
     role = request.form["role"]
 
+    # Check if username already exists
+    cursor.execute("SELECT id FROM users WHERE username=%s", (username,))
+    existing_user = cursor.fetchone()
+    if existing_user:
+        flash(
+            f"Username '{username}' already exists. Please choose another username.")
+        return redirect("/users")
+
     # Hash the password
     hashed_password = generate_password_hash(password)
 
