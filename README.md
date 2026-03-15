@@ -28,26 +28,14 @@ Security
 - Password Security: Werkzeug hash (scrypt/pbkdf2)
 
 ## Project Structure
-computer-parts-service/
-|-------app/
-|        |----app.py
-|        |----create_db.py
-|        |----Dockerfile
-|        |----pc_parts.db
-|        |----templates/
-|             |----index.html
-|             |----add_part.html
-|             |----edit_part.html
-|             |----users.html
-|             |----edit_user.html
-|-------nginx/
-|        |----Dockerfile
-|        |----nginx.conf
-|-------docker-compose.yml
-|-------init.sql
-|-------README.md
-|-------requirements.txt
-
+```text
+project-root/
+├── src/
+│   ├── main.py
+│   └── utils.py
+├── tests/
+│   └── test_main.py
+└── README.md
 
 ## Requirements
 - Docker
