@@ -28,7 +28,6 @@ Security
 - Password Security: Werkzeug hash (scrypt/pbkdf2)
 
 ## Project Structure
-```text
 project-root/
 ├── src/
 │   ├── main.py
