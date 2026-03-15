@@ -28,6 +28,8 @@ Security
 - Password Security: Werkzeug hash (scrypt/pbkdf2)
 
 ## Project Structure
+
+```text
 project-root/
 ├── src/
 │   ├── main.py
@@ -35,7 +37,7 @@ project-root/
 ├── tests/
 │   └── test_main.py
 └── README.md
-
+```
 ## Requirements
 - Docker
 - Docker Compose
@@ -88,5 +90,6 @@ project-root/
     ⦁	Only the admin can create users and manage roles
 
 4. Stop Containers:
-```bash
+    bash
  docker compose down
+```
