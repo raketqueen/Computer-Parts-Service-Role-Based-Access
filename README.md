@@ -85,13 +85,13 @@ computer-parts-service/
 ## Setup Instruction
 
 1. Clone the repository:
-```</>Bash
+``` Bash
     git clone https://github.com/<your-username>/parts-management.git
     cd parts-management
 ```
  
 2. Build the Docker containers:
-```</>Bash
+``` Bash
     docker compose up --build
 ```
 	⦁ Web app will be accessible at http://localhost:8080
@@ -103,6 +103,6 @@ computer-parts-service/
     ⦁	Only the admin can create users and manage roles
 
 4. Stop Containers:
-```</>Bash
+``` Bash
     docker compose down
 ```
