@@ -3,23 +3,22 @@
 A simple Parts Management System built with Flask, MySQL, and Docker. This project allows an admin to manage users, parts inventory, and perform role-based operations.
 
 ## Features
+ # User Management
+    - Admin can create, delete, and update users
+    - Admin can reset passwords
+    - Role-based access: admin, editor, viewer
+    - Admin cannot delete their own account(prevention for accidental lock-out)
 
-## User Management
-- Admin can create, delete, and update users
-- Admin can reset passwords
-- Role-based access: admin, editor, viewer
-- Admin cannot delete their own account(prevention for accidental lock-out)
+ # Parts Management
+    - Add, edit, delete parts(admin only)
+    - Editors can edit parts
+    - Viewers can only view parts
+    - Added editor and viewer role
 
-## Parts Management
-- Add, edit, delete parts(admin only)
-- Editors can edit parts
-- Viewers can only view parts
-- Added editor and viewer role
-
-## Security
-- Passwords are stored hashed using werkzeug.security.generate_password_hash 
-- Role-based page access
-- Session management with Flask session
+ # Security
+    - Passwords are stored hashed using werkzeug.security.generate_password_hash 
+    - Role-based page access
+    - Session management with Flask session
 
 ## Tech Stack
 - Backend: Flask
@@ -47,28 +46,6 @@ project-root/
 - Docker Compose
 - Web browser (Chrome, Firefox, etc.)
 
-## Setup Instruction
-1. Clone the repository:
-```bash
- git clone https://github.com/<your-username>/parts-management.git
- cd parts-management
-
- 
-2. Build the Docker containers:
-```bash
- docker compose up --build
-
-1.	Web app will be accessible at http://localhost:8080
-2.	MySQL is available internally on port 3306, mapped to host 3307
-
-3.	Initial Admin Account
-    ⦁	Username: admin
-    ⦁	Password: admin123 (hashed in init.sql)
-    ⦁	Only the admin can create users and manage roles
-
-4. Stop Containers:
-```bash
- docker compose down
 
 ## Security Notes
 1.	Passwords are hashed in the database
@@ -95,3 +72,26 @@ project-root/
 
 ## Author
     •	Rommel Asis – Original Developer
+
+## Setup Instruction
+1. Clone the repository:
+```bash
+ git clone https://github.com/<your-username>/parts-management.git
+ cd parts-management
+
+ 
+2. Build the Docker containers:
+```bash
+ docker compose up --build
+
+1.	Web app will be accessible at http://localhost:8080
+2.	MySQL is available internally on port 3306, mapped to host 3307
+
+3.	Initial Admin Account
+    ⦁	Username: admin
+    ⦁	Password: admin123 (hashed in init.sql)
+    ⦁	Only the admin can create users and manage roles
+
+4. Stop Containers:
+```bash
+ docker compose down
