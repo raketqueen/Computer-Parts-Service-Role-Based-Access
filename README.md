@@ -3,19 +3,19 @@
 A simple Parts Management System built with Flask, MySQL, and Docker. This project allows an admin to manage users, parts inventory, and perform role-based operations.
 
 ## Features
- # User Management
+  User Management
     - Admin can create, delete, and update users
     - Admin can reset passwords
     - Role-based access: admin, editor, viewer
     - Admin cannot delete their own account(prevention for accidental lock-out)
 
- # Parts Management
+  Parts Management
     - Add, edit, delete parts(admin only)
     - Editors can edit parts
     - Viewers can only view parts
     - Added editor and viewer role
 
- # Security
+  Security
     - Passwords are stored hashed using werkzeug.security.generate_password_hash 
     - Role-based page access
     - Session management with Flask session
@@ -28,18 +28,26 @@ A simple Parts Management System built with Flask, MySQL, and Docker. This proje
 - Password Security: Werkzeug hash (scrypt/pbkdf2)
 
 ## Project Structure
-project-root/
-│
-├─ app/                  # Flask app
-│   ├─ templates/        # HTML templates
-│   ├─ static/           # CSS, JS, images
-│   └─ app.py            # Flask app routes & logic
-│
-├─ nginx/                # Nginx config
-│
-├─ docker-compose.yaml   # Docker Compose file
-├─ init.sql              # Initial MySQL setup & hashed admin password
-└─ README.md
+computer-parts-service/
+|-------app/
+|        |----app.py
+|        |----create_db.py
+|        |----Dockerfile
+|        |----pc_parts.db
+|        |----templates/
+|             |----index.html
+|             |----add_part.html
+|             |----edit_part.html
+|             |----users.html
+|             |----edit_user.html
+|-------nginx/
+|        |----Dockerfile
+|        |----nginx.conf
+|-------docker-compose.yml
+|-------init.sql
+|-------README.md
+|-------requirements.txt
+
 
 ## Requirements
 - Docker
