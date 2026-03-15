@@ -85,17 +85,17 @@ computer-parts-service/
 ## Setup Instruction
 
 1. Clone the repository:
-    bash
+```</>Bash
     git clone https://github.com/<your-username>/parts-management.git
     cd parts-management
-
+```
  
 2. Build the Docker containers:
-    bash
+```</>Bash
     docker compose up --build
-
-1.	Web app will be accessible at http://localhost:8080
-2.	MySQL is available internally on port 3306, mapped to host 3307
+```
+	⦁ Web app will be accessible at http://localhost:8080
+	⦁ MySQL is available internally on port 3306, mapped to host 3307
 
 3.	Initial Admin Account
     ⦁	Username: admin
@@ -103,5 +103,6 @@ computer-parts-service/
     ⦁	Only the admin can create users and manage roles
 
 4. Stop Containers:
-    bash
+```</>Bash
     docker compose down
+```
