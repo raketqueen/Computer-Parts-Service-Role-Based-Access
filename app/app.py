@@ -175,5 +175,150 @@ def delete_part(part_id):
     db.commit()
     return redirect("/")
 
+# Users Management Page
+
+
+@login_required
+@app.route("/users")
+def manage_users():
+
+    # Only admin can access
+    if session.get("role") != "admin":
+        flash("You do not have permission to access User Management")
+        return redirect("/")
+
+    cursor.execute("SELECT id, username, role FROM users ORDER BY id ASC")
+    users = cursor.fetchall()
+
+    return render_template("users.html", users=users)
+
+# Create new user
+
+
+@login_required
+@app.route("/users/add", methods=["POST"])
+def add_user():
+    # Only admin can add users
+    if session.get("role") != "admin":
+        flash("You do not have permission to add users")
+        return redirect("/users")
+
+    username = request.form["username"].strip()
+    password = request.form["password"]
+    role = request.form["role"]
+
+    # Hash the password
+    hashed_password = generate_password_hash(password)
+
+    # Insert into database
+    cursor.execute(
+        "INSERT INTO users (username, password, role) VALUES (%s, %s, %s)",
+        (username, hashed_password, role)
+    )
+    db.commit()
+    flash(f"User '{username}' added successfully!")
+    return redirect("/users")
+
+# Delete User
+
+
+@login_required
+@app.route("/users/delete/<int:user_id>", methods=["POST"])
+def delete_user(user_id):
+
+    # Only admin can delete users
+    if session.get("role") != "admin":
+        flash("You do not have permission to delete users")
+        return redirect("/users")
+
+    # Prevent admin from deleting their own account
+    if user_id == session.get("user_id"):
+        flash("You cannot delete your own admin account")
+        return redirect("/users")
+
+    cursor.execute("DELETE FROM users WHERE id=%s", (user_id,))
+    db.commit()
+
+    flash("User deleted successfully")
+    return redirect("/users")
+
+# Edit User Page
+
+
+@login_required
+@app.route("/users/edit/<int:user_id>")
+def edit_user(user_id):
+
+    # Only admin can access
+    if session.get("role") != "admin":
+        flash("You do not have permission to edit users")
+        return redirect("/users")
+
+    cursor.execute(
+        "SELECT id, username, role FROM users WHERE id=%s",
+        (user_id,)
+    )
+
+    user = cursor.fetchone()
+
+    if not user:
+        flash("User not found")
+        return redirect("/users")
+
+    return render_template("edit_user.html", user=user)
+
+# Update User Role
+
+
+@login_required
+@app.route("/users/update_role/<int:user_id>", methods=["POST"])
+def update_user_role(user_id):
+
+    # Only admin can change roles
+    if session.get("role") != "admin":
+        flash("You do not have permission to change roles")
+        return redirect("/users")
+
+    new_role = request.form["role"]
+
+    cursor.execute(
+        "UPDATE users SET role=%s WHERE id=%s",
+        (new_role, user_id)
+    )
+
+    db.commit()
+
+    flash("User role updated successfully")
+    return redirect("/users")
+
+# Reset / Update User Password
+
+
+@login_required
+@app.route("/users/update_password/<int:user_id>", methods=["POST"])
+def update_user_password(user_id):
+    # Only admin can change passwords
+    if session.get("role") != "admin":
+        flash("You do not have permission to change passwords")
+        return redirect("/users")
+
+    new_password = request.form.get("password")
+    if not new_password:
+        flash("Password cannot be empty")
+        return redirect(f"/users/edit/{user_id}")
+
+    # Hash the new password
+    hashed_password = generate_password_hash(new_password)
+
+    # Update the database
+    cursor.execute(
+        "UPDATE users SET password=%s WHERE id=%s",
+        (hashed_password, user_id)
+    )
+    db.commit()
+
+    flash("User password updated successfully")
+    return redirect("/users")
+
 
 app.run(host="0.0.0.0", port=5000)

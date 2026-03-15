@@ -208,6 +208,9 @@
 			<form method="POST" action="/logout" style="display:inline;">
     			    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
 			</form>
+			{% if session.get('role') == 'admin' %}
+    			    <a href="/users" class="btn btn-outline-success btn-sm ms-2">User Management</a>
+			{% endif %}
             	    {% else %}
             	    	<button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
 			Login
