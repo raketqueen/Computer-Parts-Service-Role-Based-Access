@@ -63,24 +63,24 @@ computer-parts-service/
 
 ## Usage
 1.	Admin Panel
-    •	Access via User Management button
-    •	Add, edit, delete users
-    •	Reset user passwords
+    - Access via User Management button
+    - Add, edit, delete users
+    - Reset user passwords
 2.	Parts Management
-    •	Add, edit, delete parts (based on role)
-    •	Filter and search parts by category or keyword
+    - Add, edit, delete parts (based on role)
+    - Filter and search parts by category or keyword
 3.	Dark Theme
-    •	Future improvement: Dark theme will sync across all pages
+    - Future improvement: Dark theme will sync across all pages
 
 ## Future Improvements
-    •	Sync dark theme across User Management and Edit User pages
-    •	Add activity logs for user actions
-    •	Enhance form validations
-    •	Add export/import for parts data (CSV/Excel)
-    •	Add REST API endpoints
+- Sync dark theme across User Management and Edit User pages
+- Add activity logs for user actions
+- Enhance form validations
+- Add export/import for parts data (CSV/Excel)
+- Add REST API endpoints
 
 ## Author
-    •	Rommel Asis – Original Developer
+- Rommel Asis – Original Developer
 
 ## Setup Instruction
 
