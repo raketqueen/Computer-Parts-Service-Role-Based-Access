@@ -83,8 +83,9 @@ computer-parts-service/
     •	Rommel Asis – Original Developer
 
 ## Setup Instruction
+
 1. Clone the repository:
-``` bash
+    bash
     git clone https://github.com/<your-username>/parts-management.git
     cd parts-management
 
@@ -104,4 +105,3 @@ computer-parts-service/
 4. Stop Containers:
     bash
     docker compose down
-```
