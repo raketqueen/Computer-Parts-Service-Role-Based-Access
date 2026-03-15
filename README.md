@@ -79,9 +79,6 @@ computer-parts-service/
 - Add export/import for parts data (CSV/Excel)
 - Add REST API endpoints
 
-## Author
-- Rommel Asis – Original Developer
-
 ## Setup Instruction
 
 1. Clone the repository:
@@ -108,3 +105,6 @@ computer-parts-service/
 ``` Bash
     docker compose down
 ```
+
+## Author
+- Rommel Asis – Original Developer
