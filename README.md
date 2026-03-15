@@ -30,13 +30,25 @@ Security
 ## Project Structure
 
 ```text
-project-root/
-├── src/
-│   ├── main.py
-│   └── utils.py
-├── tests/
-│   └── test_main.py
-└── README.md
+computer-parts-service/
+|-------app/                        # Flask app
+|        |----app.py                # Flask app routes & logic
+|        |----create_db.py
+|        |----Dockerfile
+|        |----pc_parts.db
+|        |----templates/            # HTML templates
+|              |----index.html
+|              |----add_part.html
+|              |----edit_part.html
+|              |----users.html
+|              |----edit_user.html
+|-------nginx/                      # Nginx config
+|        |----Dockerfile
+|        |----nginx.conf
+|-------docker-compose.yml          # Docker Compose file
+|-------init.sql                    # Initial MySQL setup & hashed admin password
+|-------README.md
+|-------requirements.txt
 ```
 ## Requirements
 - Docker
@@ -72,9 +84,10 @@ project-root/
 
 ## Setup Instruction
 1. Clone the repository:
-```bash
- git clone https://github.com/<your-username>/parts-management.git
- cd parts-management
+```
+    bash
+    git clone https://github.com/<your-username>/parts-management.git
+    cd parts-management
 
  
 2. Build the Docker containers:
@@ -91,5 +104,5 @@ project-root/
 
 4. Stop Containers:
     bash
- docker compose down
+    docker compose down
 ```
