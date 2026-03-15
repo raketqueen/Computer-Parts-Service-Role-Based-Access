@@ -94,6 +94,7 @@ computer-parts-service/
 ``` Bash
     docker compose up --build
 ```
+## 
 	- Web app will be accessible at http://localhost:8080
 	- MySQL is available internally on port 3306, mapped to host 3307
 
