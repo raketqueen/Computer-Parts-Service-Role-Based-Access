@@ -3,22 +3,22 @@
 A simple Parts Management System built with Flask, MySQL, and Docker. This project allows an admin to manage users, parts inventory, and perform role-based operations.
 
 ## Features
-  User Management
-    - Admin can create, delete, and update users
-    - Admin can reset passwords
-    - Role-based access: admin, editor, viewer
-    - Admin cannot delete their own account(prevention for accidental lock-out)
+User Management
+- Admin can create, delete, and update users
+- Admin can reset passwords
+- Role-based access: admin, editor, viewer
+- Admin cannot delete their own account(prevention for accidental lock-out)
 
-  Parts Management
-    - Add, edit, delete parts(admin only)
-    - Editors can edit parts
-    - Viewers can only view parts
-    - Added editor and viewer role
+Parts Management
+- Add, edit, delete parts(admin only)
+- Editors can edit parts
+- Viewers can only view parts
+- Added editor and viewer role
 
-  Security
-    - Passwords are stored hashed using werkzeug.security.generate_password_hash 
-    - Role-based page access
-    - Session management with Flask session
+Security
+- Passwords are stored hashed using werkzeug.security.generate_password_hash 
+- Role-based page access
+- Session management with Flask session
 
 ## Tech Stack
 - Backend: Flask
