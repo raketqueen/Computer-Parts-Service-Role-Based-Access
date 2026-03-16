@@ -7,7 +7,7 @@ User Management
 - Admin can create, delete, and update users
 - Admin can reset passwords
 - Role-based access: admin, editor, viewer
-- Admin cannot delete their own account(prevention for accidental lock-out)
+- Admin cannot delete their own account (prevention for accidental lock-out)
 
 Parts Management
 - Add, edit, delete parts(admin only)
@@ -70,10 +70,9 @@ computer-parts-service/
     - Add, edit, delete parts (based on role)
     - Filter and search parts by category or keyword
 3.	Dark Theme
-    - Future improvement: Dark theme will sync across all pages
+    - Dark theme sync across all pages have completed.
 
 ## Future Improvements
-- Sync dark theme across User Management and Edit User pages
 - Add activity logs for user actions
 - Enhance form validations
 - Add export/import for parts data (CSV/Excel)
