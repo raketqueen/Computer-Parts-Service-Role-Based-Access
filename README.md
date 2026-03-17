@@ -1,6 +1,7 @@
 # Parts Management Web App
 
-A simple Parts Management System built with Flask, MySQL, and Docker. This project allows an admin to manage users, parts inventory, and perform role-based operations.
+A simple Parts Management System built with Flask, MySQL, and Docker.
+This project allows an admin to manage users, parts inventory, and perform role-based operations while tracking all activity logs.
 
 ## Features
 User Management
@@ -13,7 +14,15 @@ Parts Management
 - Add, edit, delete parts(admin only)
 - Editors can edit parts
 - Viewers can only view parts
-- Added editor and viewer role
+- Filter and search parts by category or keyword
+
+Activity Logs
+- Tracks all user and parts-related actions:
+    - User login/logout
+    - Part add/edit/delete
+    - User creation, deletion, role changes, and password resets
+- Logs are viewable on the Activity Logs page (admin only)
+- Table theme syncs with the rest of the app and uses color-coded headers
 
 Security
 - Passwords are stored hashed using werkzeug.security.generate_password_hash 
@@ -42,6 +51,7 @@ computer-parts-service/
 |              |----edit_part.html
 |              |----users.html
 |              |----edit_user.html
+|              |----activity_logs.html
 |-------nginx/                      # Nginx config
 |        |----Dockerfile
 |        |----nginx.conf
@@ -61,22 +71,30 @@ computer-parts-service/
 3.	Sessions are protected with a secret key in app.py
 
 ## Usage
-1.	Admin Panel
-    - Access via User Management button
+- Admin Panel
+    - Access via User Management button (admin only)
     - Add, edit, delete users
     - Reset user passwords
     - Safety features implemented for user deletion
-2.	Parts Management
+- Parts Management
     - Add, edit, delete parts (based on role)
     - Filter and search parts by category or keyword
-3.	Dark Theme
-    - Dark theme sync across all pages have completed.
+- Safety features prevent accidental deletion of the admin account
+
+## Activity Logs
+- Accessible from the Activity Logs button (admin only)
+- Displays a full history of user and parts actions with timestamps
+- Table theme and colors match the rest of the app for consistency
+
+## Dark Theme
+- Dark theme syncs across all pages
+- Toggle available from the main page
 
 ## Future Improvements
-- Add activity logs for user actions
 - Enhance form validations
 - Add export/import for parts data (CSV/Excel)
 - Add REST API endpoints
+- Customizable color schemes for activity log entries
 
 ## Setup Instruction
 

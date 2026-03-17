@@ -195,6 +195,15 @@
     	    border-color: #0b5ed7;
     	    color: #ffffff;
 	}
+
+	/* Welcome User Styling */
+	.welcome-user {
+    	    color: #00ffe5; /* Neon Teal */
+    	    font-weight: bold;
+    	    font-size: 1.5rem; /* Adjustable */
+    	    text-shadow: 0 0 5px #00ffe5;
+	}
+
     </style>
 </head>
 <body class="bg-light">
@@ -204,8 +213,11 @@
 
 	    	<div class="position-absolute start-0">
             	    {% if session.get('user_id') %}
-            	    	<span class="me-2">Welcome {{ session.get('username') }}</span>
-			<form method="POST" action="/logout" style="display:inline;">
+			<span class="me-2 welcome-user">
+    			    Welcome {{ session.get('username') }}
+			</span>
+
+		    	<form method="POST" action="/logout" style="display:inline;">
     			    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
 			</form>
 			{% if session.get('role') == 'admin' %}
@@ -220,13 +232,16 @@
 
     	    	<h1 class="mb-0">PC Hardware Inventory</h1>
 
-	    	<div class="position-absolute end-0">
+		<div class="position-absolute end-0">
     		    <button class="btn btn-outline-secondary me-2" onclick="toggleTheme()">🌙 / ☀️</button>
-		    {% if session.get('role') == 'admin' %}
-    		    <a href="/add" class="btn btn-primary">Add New Part</a>
-		    {% endif %}
+
+    		    {% if session.get('role') == 'admin' %}
+        		<a href="/logs" class="btn btn-warning me-2">Activity Logs</a>
+        		<a href="/add" class="btn btn-primary">Add New Part</a>
+    		    {% endif %}
 		</div>
-	</div>
+
+	    </div>
 
 	<div class="mb-3 text-center">
     	    <div class="btn-group flex-wrap" role="group">
@@ -251,7 +266,7 @@
 
         	<button class="btn btn-primary" type="submit">Search</button>
 		{% if request.args.get('search') %}
-		<a href="/" class="btn btn-secondary">Clear</a>
+		    <a href="/" class="btn btn-secondary">Clear</a>
 		{% endif %}
     	    </div>
 	</form>

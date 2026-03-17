@@ -233,6 +233,29 @@ def manage_users():
 
     return render_template("users.html", users=users)
 
+# Activity Logs Page
+
+
+@login_required
+@app.route("/logs")
+def activity_logs():
+
+    # Only admin can access
+    if session.get("role") != "admin":
+        flash("You do not have permission to access Activity Logs")
+        return redirect("/")
+
+    cursor.execute("""
+    SELECT id, username, action, details,
+    CONVERT_TZ(created_at, '+00:00', '+08:00') as created_at
+    FROM activity_logs
+    ORDER BY id DESC
+""")
+
+    logs = cursor.fetchall()
+
+    return render_template("activity_logs.html", logs=logs)
+
 # Create new user
 
 
