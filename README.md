@@ -100,8 +100,8 @@ computer-parts-service/
 
 1. Clone the repository:
 ``` Bash
-    git clone https://github.com/<your-username>/parts-management.git
-    cd parts-management
+    git clone https://github.com/raketqueen/Computer-Parts-Service-Role-Based-Access.git
+    cd ~/Computer-Parts-Service-Role-Based-Access
 ```
  
 2. Build the Docker containers:

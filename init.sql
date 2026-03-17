@@ -9,12 +9,16 @@ CREATE TABLE IF NOT EXISTS parts (
 );
 
 INSERT INTO parts (category, model, specs) VALUES
-('CPU','Intel Core i9','12 cores, 3.6GHz'),
-('CPU','AMD Ryzen 9','12 cores, 3.8GHz'),
-('GPU','NVIDIA RTX 3080','10GB GDDR6X'),
-('RAM','Corsair Vengeance','32GB DDR4 3600MHz'),
-('Motherboard','ASUS ROG STRIX','ATX, Z790'),
-('PSU','Corsair RM850','850W, 80+ Gold');
+('CPU','Intel Core i9-12900K','12th Gen "Alder Lake" Desktop Processor (LGA1700)'),
+('CPU','AMD Ryzen 7 5800X','AM4 Socket 8-core/16-thread'),
+('GPU','ZOTAC GAMING Geforce RTX 3080 Ti','NVIDIA RTX 3080 Ti Trinity OC 12GB'),
+('GPU','Red Devil AMD Radeon™ RX 9070 XT','16GB GDDR6 RX9070XT 16G-E/OC'),
+('RAM','Corsair VENGEANCE RGB PRO SL 32GB','DDR4 DRAM 3600MHz C18 Memory Kit'),
+('RAM','G.Skill DDR5 FLARE X5','AMD EXPO 6000MT/s | 1x8GB | 1.35V | 36-36-36-89 | Single Channel'),
+('Motherboard','ROG STRIX B550-F GAMING WIFI II','AMD Ryzen™ 5000 and 3000 Series Desktop Processors AM4 Socket'),
+('Motherboard','ROG MAXIMUS XI EXTREME','Intel® Socket 11519th / 8th Gen Intel® Core™, Pentium® Gold and Celeron® Processors Supports Intel® 14nm CPU'),
+('PSU','CoolerMaster V850 SFX Gold','80+Gold Full-Modular SFX');
+('PSU','Seasonic Focus GX-1000','80+GOLD / ATX3.0 / Gen5 Full Modular ATX Power Supply');
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,4 +31,12 @@ INSERT INTO users (username, password, role) VALUES (
     'admin',
     'scrypt:32768:8:1$RPwf3n4vd0kOFUR4$42fa4d1abe85b25994b9362fc282f5ff079e68f56b3815c2414411307600cefbc3efe033b61e286f2b5793f1472c7b0c3b869ad8b4972354ffabc3042183bbaa',
     'admin'
+);
+
+CREATE TABLE IF NOT EXISTS activity_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    details VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
