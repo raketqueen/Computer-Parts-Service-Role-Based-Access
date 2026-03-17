@@ -26,6 +26,20 @@ if db is None:
 
 cursor = db.cursor()
 
+# Activity Logging Function
+
+
+def log_action(username, action, details):
+    try:
+        cursor.execute(
+            "INSERT INTO activity_logs (username, action, details) VALUES (%s, %s, %s)",
+            (username, action, details)
+        )
+        db.commit()
+    except Exception as e:
+        print("Logging error:", e)
+
+
 app.secret_key = "your_secret_key_here"  # Add this for session management
 
 # Helper function to require login
@@ -61,6 +75,9 @@ def login():
         session["user_id"] = user[0]
         session["username"] = user[1]
         session["role"] = user[3]
+
+        log_action(user[1], "LOGIN", "User logged in")
+
         flash("Login successful")
     else:
         flash("Invalid username or password")
@@ -72,7 +89,13 @@ def login():
 @app.route("/logout", methods=["POST"])
 @login_required
 def logout():
+
+    username = session.get("username")
+
+    log_action(username, "LOGOUT", "User logged out")
+
     session.clear()
+
     flash("You have been logged out successfully")
     return redirect("/")
 
@@ -124,11 +147,16 @@ def add_part():
         category = request.form["category"].strip().upper()
         model = request.form["model"]
         specs = request.form["specs"]
+
         cursor.execute(
             "INSERT INTO parts (category, model, specs) VALUES (%s, %s, %s)",
             (category, model, specs)
         )
         db.commit()
+
+        log_action(session["username"], "ADD_PART",
+                   f"Added {category} - {model}")
+
         return redirect("/")
     return render_template("add_part.html", categories=categories)
 
@@ -151,6 +179,10 @@ def edit_part(part_id):
             (category, model, specs, part_id)
         )
         db.commit()
+
+        log_action(session["username"], "EDIT_PART",
+                   f"Edited {category} - {model} (ID:{part_id})")
+
         return redirect("/")
 
     cursor.execute("SELECT DISTINCT category FROM parts")
@@ -159,6 +191,7 @@ def edit_part(part_id):
     cursor.execute(
         "SELECT id, category, model, specs FROM parts WHERE id=%s", (part_id,))
     part = cursor.fetchone()
+
     return render_template("edit_part.html", part=part, part_id=part_id, categories=categories)
 
 # Delete Part page
@@ -171,8 +204,16 @@ def delete_part(part_id):
         flash("You do not have permission to delete this part")
         return redirect("/")
 
+    cursor.execute("SELECT category, model FROM parts WHERE id=%s", (part_id,))
+    part = cursor.fetchone()
+
     cursor.execute("DELETE FROM parts WHERE id=%s", (part_id,))
     db.commit()
+
+    if part:
+        log_action(session["username"], "DELETE_PART",
+                   f"Deleted {part[0]} - {part[1]} (ID:{part_id})")
+
     return redirect("/")
 
 # Users Management Page
@@ -224,6 +265,10 @@ def add_user():
         (username, hashed_password, role)
     )
     db.commit()
+
+    log_action(session["username"], "USER_CREATED",
+               f"Created user '{username}' with role '{role}'")
+
     flash(f"User '{username}' added successfully!")
     return redirect("/users")
 
@@ -244,8 +289,15 @@ def delete_user(user_id):
         flash("You cannot delete your own admin account")
         return redirect("/users")
 
+    cursor.execute("SELECT username FROM users WHERE id=%s", (user_id,))
+    user = cursor.fetchone()
+
     cursor.execute("DELETE FROM users WHERE id=%s", (user_id,))
     db.commit()
+
+    if user:
+        log_action(session["username"], "USER_DELETED",
+                   f"Deleted user '{user[0]}' (ID:{user_id})")
 
     flash("User deleted successfully")
     return redirect("/users")
@@ -289,12 +341,19 @@ def update_user_role(user_id):
 
     new_role = request.form["role"]
 
+    cursor.execute("SELECT username FROM users WHERE id=%s", (user_id,))
+    user = cursor.fetchone()
+
     cursor.execute(
         "UPDATE users SET role=%s WHERE id=%s",
         (new_role, user_id)
     )
 
     db.commit()
+
+    if user:
+        log_action(session["username"], "ROLE_CHANGED",
+                   f"Changed role of '{user[0]}' to '{new_role}'")
 
     flash("User role updated successfully")
     return redirect("/users")
@@ -318,12 +377,19 @@ def update_user_password(user_id):
     # Hash the new password
     hashed_password = generate_password_hash(new_password)
 
+    cursor.execute("SELECT username FROM users WHERE id=%s", (user_id,))
+    user = cursor.fetchone()
+
     # Update the database
     cursor.execute(
         "UPDATE users SET password=%s WHERE id=%s",
         (hashed_password, user_id)
     )
     db.commit()
+
+    if user:
+        log_action(session["username"], "PASSWORD_RESET",
+                   f"Reset password for user '{user[0]}'")
 
     flash("User password updated successfully")
     return redirect("/users")
