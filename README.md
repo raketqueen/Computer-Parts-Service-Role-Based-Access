@@ -86,7 +86,7 @@ computer-parts-service/
 - Displays a full history of user and parts actions with timestamps
 - Table theme and colors match the rest of the app for consistency
 
-## Dark Theme
+## ☀️🌙 Dark Theme
 - Dark theme syncs across all pages
 - Toggle available from the main page
 
