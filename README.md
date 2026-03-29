@@ -125,7 +125,3 @@ computer-parts-service/
 
 ## Author
 - Rommel Asis – Original Developer
-
-```
-<img width="2010" height="1352" alt="image" src="https://github.com/user-attachments/assets/38428381-62e6-497f-8f9c-ebe186e85567" />
-```
