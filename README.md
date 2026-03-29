@@ -1,9 +1,9 @@
-# Parts Management Web App
+# 📦 Parts Management Web App
 
 A simple Parts Management System built with Flask, MySQL, and Docker.
 This project allows an admin to manage users, parts inventory, and perform role-based operations while tracking all activity logs.
 
-## Features
+## 🚀 Features
 User Management
 - Admin can create, delete, and update users
 - Admin can reset passwords
@@ -29,14 +29,14 @@ Security
 - Role-based page access
 - Session management with Flask session
 
-## Tech Stack
+## ⚙️ Tech Stack
 - Backend: Flask
 - Database: MySQL 8
 - Containerization: Docker & Docker Compose
 - Frontend: Bootstrap 5
 - Password Security: Werkzeug hash (scrypt/pbkdf2)
 
-## Project Structure
+## 🌐 Project Structure
 
 ```text
 computer-parts-service/
@@ -60,17 +60,17 @@ computer-parts-service/
 |-------README.md
 |-------requirements.txt
 ```
-## Requirements
+## 🔩 Requirements
 - Docker
 - Docker Compose
 - Web browser (Chrome, Firefox, etc.)
 
-## Security Notes
+## 🛡️ Security Notes
 1.	Passwords are hashed in the database
 2.	Changing the admin password does not require updating init.sql
 3.	Sessions are protected with a secret key in app.py
 
-## Usage
+## 🛠️ Usage
 - Admin Panel
     - Access via User Management button (admin only)
     - Add, edit, delete users
@@ -81,7 +81,7 @@ computer-parts-service/
     - Filter and search parts by category or keyword
 - Safety features prevent accidental deletion of the admin account
 
-## Activity Logs
+## 📝 Activity Logs
 - Accessible from the Activity Logs button (admin only)
 - Displays a full history of user and parts actions with timestamps
 - Table theme and colors match the rest of the app for consistency
@@ -90,22 +90,22 @@ computer-parts-service/
 - Dark theme syncs across all pages
 - Toggle available from the main page
 
-## Future Improvements
+## 🏗️ Future Improvements
 - Enhance form validations
 - Add export/import for parts data (CSV/Excel)
 - Add REST API endpoints
 - Customizable color schemes for activity log entries
 
-## Setup Instruction
+## 🐳 Setup Instruction
 
 1. Clone the repository:
-``` Bash
+``` bash
     git clone https://github.com/raketqueen/Computer-Parts-Service-Role-Based-Access.git
     cd ~/Computer-Parts-Service-Role-Based-Access
 ```
  
 2. Build the Docker containers:
-``` Bash
+``` bash
     docker compose up --build
 ```
 
@@ -119,7 +119,7 @@ computer-parts-service/
     - Only the admin can create users and manage roles
 
 5. Stop Containers:
-``` Bash
+``` bash
     docker compose down
 ```
 
