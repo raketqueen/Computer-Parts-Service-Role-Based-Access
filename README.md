@@ -1,8 +1,9 @@
 # 📦 Parts Management Web App
 
-![alt text](images/login-page.gif)
 A simple Parts Management System built with Flask, MySQL, and Docker.
 This project allows an admin to manage users, parts inventory, and perform role-based operations while tracking all activity logs.
+
+![alt text](images/login-page.gif)
 
 ## 🚀 Features
 User Management
